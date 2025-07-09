@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Habilidades do Técnico de Segurança do Trabalho</title>
+    <style>
+        /* Estilos gerais do corpo da página */
+        body {
+            font-family: 'Inter', sans-serif; /* Usando a fonte Inter */
+            margin: 0;
+            padding: 20px;
+            background-color: #f0fdf4; /* Cor de fundo verde muito clara */
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start; /* Alinha ao topo para melhor visualização */
+            min-height: 100vh; /* Garante que o corpo ocupe a altura total da viewport */
+            box-sizing: border-box; /* Inclui padding e borda no tamanho total */
+        }
+
+        /* Contêiner principal do conteúdo */
+        .container {
+            max-width: 900px;
+            width: 100%;
+            margin: 20px auto;
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 15px; /* Cantos mais arredondados */
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1); /* Sombra mais pronunciada */
+            box-sizing: border-box;
+        }
+
+        /* Estilos para títulos */
+        h1, h2 {
+            color: #2c3e50; /* Cinzento escuro para títulos */
+            text-align: center;
+            margin-bottom: 30px;
+            font-weight: 700; /* Negrito para títulos */
+        }
+
+        /* Parágrafo introdutório */
+        p {
+            text-align: center;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        /* Seção de habilidades */
+        .skill-section {
+            margin-bottom: 40px;
+        }
+
+        /* Grid para as habilidades */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Ajuste para melhor responsividade */
+            gap: 25px; /* Espaçamento maior entre os itens */
+        }
+
+        /* Item individual de habilidade */
+        .skill-item {
+            background-color: #e6f9ed; /* Verde claro para os itens */
+            padding: 25px;
+            border-radius: 10px; /* Cantos arredondados */
+            cursor: pointer;
+            transition: all 0.3s ease; /* Transição mais suave para todas as propriedades */
+            text-align: center;
+            font-weight: 600; /* Seminegrito */
+            color: #1a7d3c; /* Verde mais escuro para o texto */
+            border: 1px solid #a8e6cf; /* Borda sutil */
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); /* Sombra leve */
+        }
+
+        /* Efeito ao passar o rato sobre o item de habilidade */
+        .skill-item:hover {
+            transform: translateY(-8px) scale(1.02); /* Levanta e aumenta um pouco */
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15); /* Sombra mais intensa no hover */
+            background-color: #d4f7e2; /* Fundo mais claro no hover */
+        }
+
+        /* Estilo para o item de habilidade ativo (clicado) */
+        .skill-item.active {
+            background-color: #4CAF50; /* Verde vibrante para o ativo */
+            color: #ffffff; /* Texto branco para contraste */
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+            transform: translateY(-4px); /* Menos levantado que no hover */
+        }
+
+        /* Pop-up de informações da habilidade */
+        .popup {
+            display: none; /* Escondido por padrão */
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4); /* Sombra mais forte para o pop-up */
+            z-index: 1000;
+            text-align: center;
+            border: 3px solid #1a7d3c; /* Borda verde vibrante */
+            max-width: 90%; /* Garante que o pop-up seja responsivo */
+            box-sizing: border-box;
+            animation: fadeIn 0.3s ease-out; /* Animação de entrada */
+        }
+
+        /* Animação de fade in para o pop-up */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translate(-50%, -60%); }
+            to { opacity: 1; transform: translate(-50%, -50%); }
+        }
+
+        /* Overlay do pop-up (fundo escuro) */
+        .popup-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7); /* Fundo mais escuro */
+            z-index: 999;
+        }
+
+        /* Botão de fechar do pop-up */
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 28px; /* Tamanho maior */
+            cursor: pointer;
+            color: #aaa;
+            transition: color 0.2s ease;
+        }
+        .close-btn:hover {
+            color: #666;
+            transform: rotate(90deg); /* Roda no hover */
+        }
+
+        /* Tipo da habilidade no pop-up */
+        .skill-type {
+            font-size: 1.4em; /* Texto maior */
+            margin-top: 20px;
+            font-weight: bold;
+            color: #1a7d3c; /* Cor verde */
+        }
+
+        /* Descrição completa no pop-up */
+        .skill-description {
+            font-size: 1em;
+            margin-top: 10px;
+            line-height: 1.5;
+            text-align: justify; /* Justifica o texto para melhor leitura */
+        }
+
+        /* Imagem do personagem */
+        .character-image {
+            display: block;
+            margin: 0 auto 40px auto; /* Mais margem inferior */
+            max-width: 250px; /* Tamanho um pouco maior */
+            height: auto;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); /* Sombra para a imagem */
+        }
+
+        /* Media queries para responsividade */
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+            .skills-grid {
+                grid-template-columns: 1fr; /* Uma coluna em telas menores */
+            }
+            .skill-item {
+                padding: 18px;
+            }
+            .popup {
+                padding: 25px;
+                width: 95%; /* Ocupa quase toda a largura em mobile */
+            }
+            .close-btn {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Imagem do Técnico de Segurança do Trabalho -->
+        <img src="https://i.pinimg.com/originals/1c/25/b0/1c25b015de2e30f766a8316b828335f8.png" alt="Logotipo Segurança do Trabalho" class="character-image">
+        <h1>Habilidades Essenciais do Técnico de Segurança do Trabalho</h1>
+
+        <p>Um bom Técnico de Segurança do Trabalho (TST) possui uma combinação de habilidades técnicas e comportamentais para garantir um ambiente de trabalho seguro e produtivo.</p>
+
+        <div class="skill-section">
+            <h2>Habilidades Comportamentais</h2>
+            <div class="skills-grid" id="behavioral-skills">
+                <div class="skill-item" data-skill-type="comportamental"
+                     data-full-description="Transmitir informações complexas sobre riscos, procedimentos e normas de forma clara e compreensível para todos os níveis hierárquicos, desde a diretoria até os colaboradores da linha de frente.">CLAREZA</div>
+                <div class="skill-item" data-skill-type="comportamental"
+                     data-full-description="Ouvir atentamente as preocupações, sugestões e feedbacks dos trabalhadores para entender os desafios e identificar oportunidades de melhoria.">ESCUTA ATIVA</div>
+                <div class="skill-item" data-skill-type="comportamental"
+                     data-full-description="Promover a participação ativa dos colaboradores nas iniciativas de segurança, incentivando a responsabilidade compartilhada.">ENGAJAMENTO</div>
+                <div class="skill-item" data-skill-type="comportamental"
+                     data-full-description="Conquistar a confiança de todos, demonstrando conhecimento, ética e compromisso genuíno com o bem-estar da equipe.">CREDIBILIDADE</div>
+            </div>
+        </div>
+
+        <div class="skill-section">
+            <h2>Habilidades Técnicas</h2>
+            <div class="skills-grid" id="technical-skills">
+                <div class="skill-item" data-skill-type="técnica"
+                     data-full-description="Ter conhecimento sobre os agentes ambientais (físicos, químicos e biológicos), suas formas de exposição e os limites de tolerância é fundamental para identificar e controlar riscos à saúde dos trabalhadores.">Noções de Higiene Ocupacional</div>
+                <div class="skill-item" data-skill-type="técnica"
+                     data-full-description="O TST deve ser capaz de planejar, organizar e ministrar treinamentos sobre segurança (integração, trabalho em altura, espaço confinado, etc.) e promover campanhas que eduquem e conscientizem os trabalhadores sobre as práticas seguras.">Condução de Treinamentos e Campanhas de Conscientização</div>
+                <div class="skill-item" data-skill-type="técnica"
+                     data-full-description="O TST deve dominar as NRs (como NR 10, NR 12, NR 33, NR 35, etc.), o embasamento legal (CLT) e outras legislações pertinentes à segurança e saúde no trabalho. Isso inclui saber interpretá-las e aplicá-las corretamente a diferentes cenários e tipos de empresas.">Conhecimento Aprofundado das Normas Regulamentadoras (NRs) e Legislação de SST</div>
+                <div class="skill-item" data-skill-type="técnica"
+                     data-full-description="Essa habilidade envolve a capacidade de identificar perigos, avaliar os riscos associados (físicos, químicos, biológicos, ergonômicos e de acidentes), quantificar sua probabilidade e severidade, e determinar as medidas de controle necessárias. É a base para a elaboração de programas de prevenção.">Análise e Avaliação de Riscos</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Overlay do pop-up -->
+    <div class="popup-overlay" id="popup-overlay"></div>
+    <!-- Pop-up de detalhes da habilidade -->
+    <div class="popup" id="skill-popup">
+        <span class="close-btn" onclick="closePopup()">&times;</span>
+        <p id="popup-skill-name"></p>
+        <p class="skill-type" id="popup-skill-type"></p>
+        <p class="skill-description" id="popup-skill-description"></p>
+    </div>
+
+    <script>
+        // Garante que o script só execute após o carregamento completo do DOM
+        document.addEventListener('DOMContentLoaded', () => {
+            // Seleciona todos os itens de habilidade
+            const skillItems = document.querySelectorAll('.skill-item');
+            // Seleciona os elementos do pop-up
+            const popup = document.getElementById('skill-popup');
+            const popupOverlay = document.getElementById('popup-overlay');
+            const popupSkillName = document.getElementById('popup-skill-name');
+            const popupSkillType = document.getElementById('popup-skill-type');
+            const popupSkillDescription = document.getElementById('popup-skill-description'); // Novo elemento para a descrição
+
+            // Adiciona um ouvinte de evento de clique a cada item de habilidade
+            skillItems.forEach(item => {
+                item.addEventListener('click', () => {
+                    // Remove a classe 'active' de todos os itens para desmarcar os anteriores
+                    skillItems.forEach(i => i.classList.remove('active'));
+                    // Adiciona a classe 'active' ao item clicado
+                    item.classList.add('active');
+
+                    // Obtém o nome, o tipo e a descrição completa da habilidade a partir dos atributos do elemento
+                    const skillName = item.textContent;
+                    const skillType = item.getAttribute('data-skill-type');
+                    const fullDescription = item.getAttribute('data-full-description'); // Obtém a descrição completa
+
+                    // Atualiza o conteúdo do pop-up com as informações da habilidade
+                    popupSkillName.textContent = skillName;
+                    popupSkillType.textContent = `Esta é uma habilidade ${skillType}.`;
+                    popupSkillDescription.textContent = fullDescription; // Define a descrição completa
+
+                    // Exibe o pop-up e o overlay
+                    popup.style.display = 'block';
+                    popupOverlay.style.display = 'block';
+                });
+            });
+        });
+
+        // Função para fechar o pop-up
+        function closePopup() {
+            // Oculta o pop-up e o overlay
+            document.getElementById('skill-popup').style.display = 'none';
+            document.getElementById('popup-overlay').style.display = 'none';
+            // Opcionalmente, remove a classe 'active' de todos os itens ao fechar o pop-up
+            document.querySelectorAll('.skill-item').forEach(item => item.classList.remove('active'));
+        }
+    </script>
+</body>
+</html>
